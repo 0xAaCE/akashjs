@@ -3,7 +3,7 @@ import {
   QueryClientImpl,
   QueryDeploymentRequest,
   QueryDeploymentResponse
-} from "../codec/akash/deployment/v1beta1/query";
+} from "../codec/akash/deployment/v1beta2/query";
 
 export interface QueryDeploymentGetParams {
   dseq: number,

@@ -1,6 +1,6 @@
 import Long from "long";
 import { Akash, defaultFee } from "../akash/akash";
-import { MsgCloseDeployment } from "../codec/akash/deployment/v1beta1/deployment";
+import { MsgCloseDeployment } from "../codec/akash/deployment/v1beta2/deploymentmsg";
 import { BroadcastTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
 

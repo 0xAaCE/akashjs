@@ -1,12 +1,4 @@
-import Certificate from "pkijs/src/Certificate";
-import AttributeTypeAndValue from "pkijs/src/AttributeTypeAndValue";
-import BasicConstraints from "pkijs/src/BasicConstraints";
-import Extension from "pkijs/src/Extension";
-import ExtKeyUsage from "pkijs/src/ExtKeyUsage";
-import {
-  getAlgorithmParameters,
-  getCrypto
-} from "pkijs/src/common";
+import { Certificate, AttributeTypeAndValue, BasicConstraints, Extension, ExtKeyUsage, getAlgorithmParameters, getCrypto } from "pkijs";
 import * as asn1js from "asn1js";
 import { arrayBufferToString, toBase64, stringToArrayBuffer } from "pvutils";
 import { del, get, set } from 'idb-keyval';
@@ -28,7 +20,7 @@ export async function createPEMBlocks(
   hashAlgorithm = "SHA-256"
 ): Promise<PEMBlocks> {
   const crypto = getCrypto() as SubtleCrypto;
-  const algo = getAlgorithmParameters(signAlgorithm, "generatekey");
+  const algo = getAlgorithmParameters(signAlgorithm, "generateKey");
 
   // Note that golang version further password protects the private key
   // with a signature generated from using the account's key to sign its address.
@@ -50,7 +42,7 @@ export async function createPEMBlocks(
   // against the one on chain. This feels attackable.
   //
   // Need to think about this more...
-  const keyPair = await crypto.generateKey(algo.algorithm, true, algo.usages) as CryptoKeyPair;
+  const keyPair = await crypto.generateKey(algo.algorithm as Algorithm, true, algo.usages) as CryptoKeyPair;
 
   const certificate = new Certificate();
   certificate.version = 2;

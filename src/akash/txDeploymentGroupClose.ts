@@ -1,6 +1,6 @@
 import Long from "long";
 import { Akash, defaultFee } from "../akash/akash";
-import { MsgCloseGroup } from "../codec/akash/deployment/v1beta1/group";
+import { MsgCloseGroup } from "../codec/akash/deployment/v1beta2/groupmsg";
 import { BroadcastTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
 

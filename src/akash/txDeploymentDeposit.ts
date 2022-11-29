@@ -1,6 +1,6 @@
 import Long from "long";
 import { Akash, defaultFee } from "../akash/akash";
-import { MsgDepositDeployment } from "../codec/akash/deployment/v1beta1/deployment";
+import { MsgDepositDeployment } from "../codec/akash/deployment/v1beta2/deploymentmsg";
 import { BroadcastTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
 import { Coin } from "../codec/cosmos/base/v1beta1/coin";
@@ -32,7 +32,8 @@ export class TxDeploymentDeposit {
         owner: owner,
         dseq: new Long(dseq)
       },
-      amount: amount
+      amount: amount,
+      depositor: owner
     };
 
     return this.akash.signingClient.deploymentDeposit(owner, request, fee, memo);

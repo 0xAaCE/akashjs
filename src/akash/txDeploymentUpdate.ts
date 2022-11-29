@@ -1,6 +1,6 @@
 import Long from "long";
 import { Akash, defaultFee } from "../akash/akash";
-import { MsgUpdateDeployment } from "../codec/akash/deployment/v1beta1/deployment";
+import { MsgUpdateDeployment } from "../codec/akash/deployment/v1beta2/deploymentmsg";
 import { BroadcastTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
 import { SDL } from "../utils/deployment";
@@ -32,7 +32,6 @@ export class TxDeploymentUpdate {
         owner: owner,
         dseq: new Long(dseq)
       },
-      groups: sdl.groups,
       version: new Uint8Array(await sdl.manifestVersion())
     };
 

@@ -2,7 +2,7 @@ import {
   QueryClientImpl,
   QueryProviderAuditorRequest,
   QueryProvidersResponse
-  } from "../codec/akash/audit/v1beta1/query";
+  } from "../codec/akash/audit/v1beta2/query";
 
 export interface QueryAuditGetParams {
   auditor: string;

@@ -327,7 +327,7 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryCertificatesResponse> {
     const data = QueryCertificatesRequest.encode(request).finish();
     const promise = this.rpc.request(
-      "akash.cert.v1beta1.Query",
+      "akash.cert.v1beta2.Query",
       "Certificates",
       data
     );

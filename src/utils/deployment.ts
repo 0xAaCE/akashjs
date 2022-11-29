@@ -1,10 +1,10 @@
 import { Akash } from "../akash/akash";
-import { getCrypto } from "pkijs/src/common";
+import { getCrypto } from "pkijs";
 import { stringToArrayBuffer } from "pvutils";
 import yaml, { DEFAULT_SCHEMA } from "js-yaml";
-import { GroupSpec } from "../codec/akash/deployment/v1beta1/group";
-import { Attribute } from "../codec/akash/base/v1beta1/attribute";
-import { Endpoint, Endpoint_Kind } from "../codec/akash/base/v1beta1/endpoint";
+import { GroupSpec } from "../codec/akash/deployment/v1beta2/groupspec";
+import { Attribute } from "../codec/akash/base/v1beta2/attribute";
+import { Endpoint, Endpoint_Kind } from "../codec/akash/base/v1beta2/endpoint";
 import { BroadcastTxResponse } from "@cosmjs/stargate";
 import { findAttribute, parseRawLog } from "@cosmjs/stargate/build/logs";
 
@@ -64,7 +64,7 @@ export interface ServiceExposeHTTPOptions {
 export interface ResourceUnits {
   cpu: CPU;
   memory: Memory;
-  storage: Storage;
+  storage: Storage[];
   endpoints: Endpoint[] | null;
 }
 
@@ -218,7 +218,7 @@ export class SDL {
                   if (shouldBeIngress) {
                     kind = Endpoint_Kind.SHARED_HTTP;
                   }
-                  endpoints.push({ kind: kind });
+                  endpoints.push({ kind: kind, sequenceNumber: 0 });
                 }
               });
             }
@@ -243,12 +243,13 @@ export class SDL {
                 },
                 attributes: []
               },
-              storage: {
+              storage: [{
+                name: 'default',
                 quantity: {
                   val: new Uint8Array(stringToArrayBuffer(normalizedStorageUnit))
                 },
                 attributes: []
-              },
+              }],
               endpoints: endpoints
             }
           };
@@ -310,11 +311,11 @@ export class SDL {
                   val: normalizedMemoryUnit
                 }
               },
-              storage: {
+              storage: [{
                 size: {
                   val: normalizedStorageUnit
                 }
-              },
+              }],
               endpoints: null
             },
             Count: this.data.deployment[serviceName][groupName].count,

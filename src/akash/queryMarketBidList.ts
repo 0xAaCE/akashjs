@@ -3,7 +3,7 @@ import {
   QueryClientImpl,
   QueryBidsRequest,
   QueryBidsResponse
-} from "../codec/akash/market/v1beta1/query";
+} from "../codec/akash/market/v1beta2/query";
 
 export interface QueryMarketBidListParams {
   owner?: string;

@@ -2,7 +2,7 @@ import {
   QueryClientImpl,
   QueryCertificatesRequest,
   QueryCertificatesResponse
-} from "../codec/akash/cert/v1beta1/query";
+} from "../codec/akash/cert/v1beta2/query";
 
 export interface QueryCertListParams {
   owner?: string;

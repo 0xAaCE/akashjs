@@ -13,11 +13,11 @@ import {
   TxCmd
 } from "./types";
 
-import { QueryClientImpl as AuditQueryClientImpl } from "../codec/akash/audit/v1beta1/query";
-import { QueryClientImpl as CertQueryClientImpl } from "../codec/akash/cert/v1beta1/query";
-import { QueryClientImpl as DeploymentQueryClientImpl } from "../codec/akash/deployment/v1beta1/query";
-import { QueryClientImpl as MarketQueryClientImpl } from "../codec/akash/market/v1beta1/query";
-import { QueryClientImpl as ProviderQueryClientImpl } from "../codec/akash/provider/v1beta1/query";
+import { QueryClientImpl as AuditQueryClientImpl } from "../codec/akash/audit/v1beta2/query";
+import { QueryClientImpl as CertQueryClientImpl } from "../codec/akash/cert/v1beta2/query";
+import { QueryClientImpl as DeploymentQueryClientImpl } from "../codec/akash/deployment/v1beta2/query";
+import { QueryClientImpl as MarketQueryClientImpl } from "../codec/akash/market/v1beta2/query";
+import { QueryClientImpl as ProviderQueryClientImpl } from "../codec/akash/provider/v1beta2/query";
 import { QueryAuditGet } from "./queryAuditGet";
 import { QueryAuditList } from "./queryAuditList";
 import { QueryCertList } from "./queryCertList";

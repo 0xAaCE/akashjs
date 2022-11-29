@@ -1,6 +1,6 @@
 import Long from "long";
 import { Akash, defaultFee } from "../akash/akash";
-import { MsgCreateLease } from "../codec/akash/market/v1beta1/lease";
+import { MsgCreateLease } from "../codec/akash/market/v1beta2/lease";
 import { BroadcastTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
 

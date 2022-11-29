@@ -2,7 +2,7 @@ import {
   QueryClientImpl,
   QueryProviderRequest,
   QueryProviderResponse
-} from "../codec/akash/provider/v1beta1/query";
+} from "../codec/akash/provider/v1beta2/query";
 
 export interface QueryProviderGetParams {
   provider: string

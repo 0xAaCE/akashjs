@@ -1,5 +1,5 @@
 import { Akash, defaultFee } from "../akash/akash";
-import { MsgRevokeCertificate } from "../codec/akash/cert/v1beta1/cert";
+import { MsgRevokeCertificate } from "../codec/akash/cert/v1beta2/cert";
 import { BroadcastTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
 import {

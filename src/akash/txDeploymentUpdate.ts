@@ -1,7 +1,7 @@
 import Long from "long";
 import { Akash, defaultFee } from "../akash/akash";
 import { MsgUpdateDeployment } from "../codec/akash/deployment/v1beta2/deploymentmsg";
-import { BroadcastTxResponse } from "@cosmjs/stargate";
+import { DeliverTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
 import { SDL } from "../utils/deployment";
 
@@ -17,7 +17,7 @@ export class TxDeploymentUpdate {
     this.akash = akash;
   }
 
-  public async params(params: TxDeploymentUpdateParams): Promise<BroadcastTxResponse> {
+  public async params(params: TxDeploymentUpdateParams): Promise<DeliverTxResponse> {
     const owner = this.akash.address;
 
     const {

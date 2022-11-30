@@ -1,7 +1,7 @@
 import Long from "long";
 import { Akash, defaultFee, denom } from "../akash/akash";
 import { MsgCreateDeployment } from "../codec/akash/deployment/v1beta2/deploymentmsg";
-import { BroadcastTxResponse } from "@cosmjs/stargate";
+import { DeliverTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
 import { Coin } from "../codec/cosmos/base/v1beta1/coin";
 import { SDL, currentBlockHeight } from "../utils/deployment";
@@ -19,7 +19,7 @@ export class TxDeploymentCreate {
     this.akash = akash;
   }
 
-  public async params(params: TxDeploymentCreateParams): Promise<BroadcastTxResponse> {
+  public async params(params: TxDeploymentCreateParams): Promise<DeliverTxResponse> {
     const owner = this.akash.address;
 
     const {

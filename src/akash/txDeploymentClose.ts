@@ -1,7 +1,7 @@
 import Long from "long";
 import { Akash, defaultFee } from "../akash/akash";
 import { MsgCloseDeployment } from "../codec/akash/deployment/v1beta2/deploymentmsg";
-import { BroadcastTxResponse } from "@cosmjs/stargate";
+import { DeliverTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
 
 export interface TxDeploymentCloseParams extends TxParams {
@@ -15,7 +15,7 @@ export class TxDeploymentClose {
     this.akash = akash;
   }
 
-  public async params(params: TxDeploymentCloseParams): Promise<BroadcastTxResponse> {
+  public async params(params: TxDeploymentCloseParams): Promise<DeliverTxResponse> {
     const owner = this.akash.address;
 
     const {

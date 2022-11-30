@@ -5,7 +5,7 @@ import yaml, { DEFAULT_SCHEMA } from "js-yaml";
 import { GroupSpec } from "../codec/akash/deployment/v1beta2/groupspec";
 import { Attribute } from "../codec/akash/base/v1beta2/attribute";
 import { Endpoint, Endpoint_Kind } from "../codec/akash/base/v1beta2/endpoint";
-import { BroadcastTxResponse } from "@cosmjs/stargate";
+import { DeliverTxResponse } from "@cosmjs/stargate";
 import { findAttribute, parseRawLog } from "@cosmjs/stargate/build/logs";
 
 // Some golang structs are slightly different from the shapes defined
@@ -228,7 +228,7 @@ export class SDL {
             count: this.data.deployment[serviceName][groupName].count,
             price: {
               denom: this.data.profiles.placement[groupName].pricing[profileName].denom,
-              amount: this.data.profiles.placement[groupName].pricing[profileName].amount.toString()
+              amount: this.data.profiles.placement[groupName].pricing[profileName].amount.toString().padEnd(23, '0')
             },
             resources: {
               cpu: {
@@ -393,7 +393,7 @@ export async function currentBlockHeight(akash: Akash): Promise<number> {
   return response.syncInfo.latestBlockHeight;
 }
 
-export function findDeploymentSequence(deployCreateResponse: BroadcastTxResponse): { dseq: number, oseq: number, gseq: number } {
+export function findDeploymentSequence(deployCreateResponse: DeliverTxResponse): { dseq: number, oseq: number, gseq: number } {
   const logs = parseRawLog(deployCreateResponse.rawLog);
   const eventType = "akash.v1";
   return {

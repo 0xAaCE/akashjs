@@ -1,7 +1,7 @@
 import Long from "long";
 import { Akash, defaultFee } from "../akash/akash";
 import { MsgCreateLease } from "../codec/akash/market/v1beta2/lease";
-import { BroadcastTxResponse } from "@cosmjs/stargate";
+import { DeliverTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
 
 export interface TxMarketLeaseCreateParams extends TxParams {
@@ -18,7 +18,7 @@ export class TxMarketLeaseCreate {
     this.akash = akash;
   }
 
-  public async params(params: TxMarketLeaseCreateParams): Promise<BroadcastTxResponse> {
+  public async params(params: TxMarketLeaseCreateParams): Promise<DeliverTxResponse> {
     const owner = this.akash.address;
 
     const {

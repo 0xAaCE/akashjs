@@ -1,7 +1,7 @@
 import Long from "long";
 import { Akash, defaultFee } from "../akash/akash";
 import { MsgPauseGroup } from "../codec/akash/deployment/v1beta2/groupmsg";
-import { BroadcastTxResponse } from "@cosmjs/stargate";
+import { DeliverTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
 
 export interface TxDeploymentGroupPauseParams extends TxParams {
@@ -16,7 +16,7 @@ export class TxDeploymentGroupPause {
     this.akash = akash;
   }
 
-  public async params(params: TxDeploymentGroupPauseParams): Promise<BroadcastTxResponse> {
+  public async params(params: TxDeploymentGroupPauseParams): Promise<DeliverTxResponse> {
     const owner = this.akash.address;
 
     const {

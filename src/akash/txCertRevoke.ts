@@ -1,6 +1,6 @@
 import { Akash, defaultFee } from "../akash/akash";
 import { MsgRevokeCertificate } from "../codec/akash/cert/v1beta2/cert";
-import { BroadcastTxResponse } from "@cosmjs/stargate";
+import { DeliverTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
 import {
   loadPEMBlocks,
@@ -26,7 +26,7 @@ export class TxCertRevoke {
     return "";
   }
 
-  public async params(params: TxCertRevokeParams = {}): Promise<BroadcastTxResponse> {
+  public async params(params: TxCertRevokeParams = {}): Promise<DeliverTxResponse> {
     const owner = this.akash.address;
 
     const {

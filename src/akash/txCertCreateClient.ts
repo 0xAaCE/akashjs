@@ -1,6 +1,6 @@
 import { Akash, defaultFee } from "../akash/akash";
 import { MsgCreateCertificate } from "../codec/akash/cert/v1beta2/cert";
-import { BroadcastTxResponse } from "@cosmjs/stargate";
+import { DeliverTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
 import {
   createPEMBlocks,
@@ -21,7 +21,7 @@ export class TxCertCreateClient {
     this.akash = akash;
   }
 
-  public async params(params: TxCertCreateClientParams = {}): Promise<BroadcastTxResponse> {
+  public async params(params: TxCertCreateClientParams = {}): Promise<DeliverTxResponse> {
     const owner = this.akash.address;
 
     const {

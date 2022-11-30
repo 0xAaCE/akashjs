@@ -5,7 +5,7 @@ import {
   defaultRegistryTypes,
   SigningStargateClient,
   SigningStargateClientOptions,
-  BroadcastTxResponse
+ DeliverTxResponse
 } from "@cosmjs/stargate";
 import {
   MsgCreateCertificate,
@@ -76,7 +76,7 @@ export class SigningAkashClient extends SigningStargateClient {
     value: MsgCreateCertificate,
     fee: StdFee,
     memo = ""
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const message: MsgCreateCertificateEncodeObject = {
       typeUrl: "/akash.cert.v1beta2.MsgCreateCertificate",
       value: value
@@ -89,7 +89,7 @@ export class SigningAkashClient extends SigningStargateClient {
     value: MsgRevokeCertificate,
     fee: StdFee,
     memo = ""
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const message: MsgRevokeCertificateEncodeObject = {
       typeUrl: "/akash.cert.v1beta2.MsgRevokeCertificate",
       value: value
@@ -102,11 +102,12 @@ export class SigningAkashClient extends SigningStargateClient {
     value: MsgCreateDeployment,
     fee: StdFee,
     memo = ""
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse | any> {
     const message: MsgCreateDeploymentEncodeObject = {
       typeUrl: "/akash.deployment.v1beta2.MsgCreateDeployment",
       value: value
     };
+
     return this.signAndBroadcast(accountAddress, [message], fee, memo);
   }
 
@@ -115,7 +116,7 @@ export class SigningAkashClient extends SigningStargateClient {
     value: MsgCloseDeployment,
     fee: StdFee,
     memo = ""
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const message: MsgCloseDeploymentEncodeObject = {
       typeUrl: "/akash.deployment.v1beta2.MsgCloseDeployment",
       value: value
@@ -128,7 +129,7 @@ export class SigningAkashClient extends SigningStargateClient {
     value: MsgDepositDeployment,
     fee: StdFee,
     memo = ""
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const message: MsgDepositDeploymentEncodeObject = {
       typeUrl: "/akash.deployment.v1beta2.MsgDepositDeployment",
       value: value
@@ -141,7 +142,7 @@ export class SigningAkashClient extends SigningStargateClient {
     value: MsgUpdateDeployment,
     fee: StdFee,
     memo = ""
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const message: MsgUpdateDeploymentEncodeObject = {
       typeUrl: "/akash.deployment.v1beta2.MsgUpdateDeployment",
       value: value
@@ -154,7 +155,7 @@ export class SigningAkashClient extends SigningStargateClient {
     value: MsgCloseGroup,
     fee: StdFee,
     memo = ""
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const message: MsgCloseGroupEncodeObject = {
       typeUrl: "/akash.deployment.v1beta2.MsgCloseGroup",
       value: value
@@ -167,7 +168,7 @@ export class SigningAkashClient extends SigningStargateClient {
     value: MsgPauseGroup,
     fee: StdFee,
     memo = ""
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const message: MsgPauseGroupEncodeObject = {
       typeUrl: "/akash.deployment.v1beta2.MsgPauseGroup",
       value: value
@@ -180,7 +181,7 @@ export class SigningAkashClient extends SigningStargateClient {
     value: MsgStartGroup,
     fee: StdFee,
     memo = ""
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const message: MsgStartGroupEncodeObject = {
       typeUrl: "/akash.deployment.v1beta2.MsgStartGroup",
       value: value
@@ -193,7 +194,7 @@ export class SigningAkashClient extends SigningStargateClient {
     value: MsgCreateLease,
     fee: StdFee,
     memo = ""
-  ): Promise<BroadcastTxResponse> {
+  ): Promise<DeliverTxResponse> {
     const message: MsgCreateLeaseEncodeObject = {
       typeUrl: "/akash.market.v1beta2.MsgCreateLease",
       value: value

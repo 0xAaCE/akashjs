@@ -9,7 +9,7 @@ const apiEndpoint = "https://api.akash.forbole.com:443"
 const RPC = "https://rpc.akash.forbole.com:443"
 
 const getWallet = async () => {
-    const mnemonic = 'YOUR MNEMONIC';
+    const mnemonic = 'bar journey lava raw tumble address twelve caution opera view next ethics';
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic, { prefix: "akash" });
   
     // get first account
@@ -56,6 +56,9 @@ const makeDeployment = async () => {
     
     const akash = await Akash.connect(RPC, offlineSigner);
     const sdl = new SDL(deployYMLStr);
+
+    console.log("SDL", JSON.stringify(sdl));
+
     const response = await akash.tx.deployment.create.params({
     sdl: sdl
     });
@@ -70,14 +73,31 @@ const makeDeployment = async () => {
     console.log('Deployment sequence');
     console.log(dseq, gseq, oseq);
 
-    // Query bids
-    const responseBid = await akash.query.market.bid.list.params({
-        owner: account.address,
-        dseq: dseq
-    });
+    let count = 0;
+    while(count < 5){
+        const prom = await new Promise((resolve, reject) => {
+            setTimeout(async () => {
+                resolve(true)
+            }, 10000);
+        });
+    
+        console.log('Getting bids');
+    
+        const responseBid = await akash.query.market.bid.list.params({
+            owner: account.address,
+            dseq: dseq
+        });
+    
+        console.log('//////// Bids /////////');
+        console.log('\n\n');
+        console.log(JSON.stringify(responseBid, undefined, 2));
+        console.log('\n\n');
+        console.log('//////// END Bids /////////');
+        console.log('\n\n');
 
-    console.log('Bids');
-    console.log(responseBid);
+        count += 1;
+    }
+
 }
 
 makeDeployment();

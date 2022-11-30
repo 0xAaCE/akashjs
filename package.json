@@ -19,9 +19,9 @@
   },
   "homepage": "https://github.com/spacepotahto/akashjs#readme",
   "dependencies": {
-    "@cosmjs/proto-signing": "^0.25.4",
-    "@cosmjs/stargate": "^0.25.4",
-    "@cosmjs/tendermint-rpc": "^0.25.4",
+    "@cosmjs/proto-signing": "^0.29.4",
+    "@cosmjs/stargate": "^0.29.4",
+    "@cosmjs/tendermint-rpc": "^0.29.4",
     "crypto": "^1.0.1",
     "idb-keyval": "^5.0.6",
     "js-yaml": "^4.1.0",

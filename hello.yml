@@ -21,7 +21,7 @@ profiles:
         storage:
           size: 512Mi
   placement:
-    westcoast:
+    dcloud:
       attributes:
         host: akash
       signedBy:
@@ -30,10 +30,10 @@ profiles:
       pricing:
         web: 
           denom: uakt
-          amount: 1000
+          amount: 1000000000000000000
 
 deployment:
   web:
-    westcoast:
+    dcloud:
       profile: web
       count: 1

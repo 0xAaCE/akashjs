@@ -5,6 +5,7 @@ import { BroadcastTxResponse } from "@cosmjs/stargate";
 import { TxParams } from "../akash/types";
 import { Coin } from "../codec/cosmos/base/v1beta1/coin";
 import { SDL, currentBlockHeight } from "../utils/deployment";
+import { MsgCreateDeploymentEncodeObject } from "./encodeobjects";
 
 export interface TxDeploymentCreateParams extends TxParams {
   sdl: SDL,
@@ -19,12 +20,10 @@ export class TxDeploymentCreate {
     this.akash = akash;
   }
 
-  public async params(params: TxDeploymentCreateParams): Promise<BroadcastTxResponse> {
+  public async params(params: TxDeploymentCreateParams): Promise<MsgCreateDeploymentEncodeObject> {
     const owner = this.akash.address;
 
     const {
-      memo = "",
-      fee = defaultFee,
       deposit = {
         denom: denom,
         amount: "5000000"
@@ -44,6 +43,15 @@ export class TxDeploymentCreate {
       depositor: owner
     };
 
-    return this.akash.signingClient.deploymentCreate(owner, request, fee, memo);
+    const message: MsgCreateDeploymentEncodeObject = {
+      typeUrl: "/akash.deployment.v1beta2.MsgCreateDeployment",
+      value: request
+    };
+
+    return message;
+  }
+
+  public async execute(message: MsgCreateDeploymentEncodeObject): Promise<BroadcastTxResponse> {
+    return this.akash.signingClient.deploymentCreate(this.akash.address, message.value, defaultFee, '');
   }
 }

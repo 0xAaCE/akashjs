@@ -22,7 +22,9 @@
     "@cosmjs/proto-signing": "^0.29.4",
     "@cosmjs/stargate": "^0.29.4",
     "@cosmjs/tendermint-rpc": "^0.29.4",
+    "axios": "^1.2.0",
     "crypto": "^1.0.1",
+    "dotenv": "^16.0.3",
     "idb-keyval": "^5.0.6",
     "js-yaml": "^4.1.0",
     "pkijs": "^3.0.8"

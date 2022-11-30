@@ -42,11 +42,16 @@ profiles:
 # https://docs.akash.network/intro-to-akash/stack-definition-language#profiles.placement
   placement:
     dcloud:
+      attributes:
+        host: akash
+      signedBy:
+        anyOf:
+          - "akash1365yvmc4s7awdyj3n2sav7xfx76adc6dnmlx63"
       pricing:
         # The name of the service
         web:
           denom: uakt
-          amount: 1000
+          amount: 1000000000000000000
 
 # The deployment section defines how to deploy the services. It is a mapping of service name to deployment configuration.
 # https://docs.akash.network/intro-to-akash/stack-definition-language#deployment

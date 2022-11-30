@@ -223,7 +223,6 @@ export class SDL {
               });
             }
           });
-
           return {
             count: this.data.deployment[serviceName][groupName].count,
             price: {

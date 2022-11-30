@@ -6,7 +6,8 @@ import {
   createPEMBlocks,
   savePEMBlocks,
   encode,
-  stringToUint8Array
+  stringToUint8Array,
+  toFile
 } from "../utils/certificate";
 
 export interface TxCertCreateClientParams extends TxParams {
@@ -41,9 +42,11 @@ export class TxCertCreateClient {
     };
 
     const response = this.akash.signingClient.certCreateClient(owner, request, fee, memo);
+
+
     response.then(() => {
       // save certificate to IndexedDB
-      savePEMBlocks(pemBlocks);
+      toFile(pemBlocks);
     });
     return response;
   }

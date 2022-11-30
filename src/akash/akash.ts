@@ -53,10 +53,10 @@ export const defaultFee: StdFee = {
   amount: [
     {
       denom: denom,
-      amount: "5000",
+      amount: "50000",
     }
   ],
-  gas: "200000"
+  gas: "800000"
 };
 
 export class Akash {

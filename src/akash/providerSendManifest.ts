@@ -1,12 +1,15 @@
+import axios from 'axios';
+import https from 'https';
+
 import { providerGatewayPost, submitManifestPath } from "../utils/provider";
 import { Akash } from "../akash/akash";
 import { SDL } from "../utils/deployment";
+import { getPemStrings } from "../utils/certificate";
 
 export interface ProviderSendManifestParams {
   sdl: SDL,
-  dseq: number,
+  dseq: Long,
   provider: string,
-  proxy: string
 }
 
 export class ProviderSendManifest {
@@ -23,7 +26,6 @@ export class ProviderSendManifest {
       sdl,
       dseq,
       provider,
-      proxy
     } = params;
 
     const manifest = sdl.manifest;
@@ -35,13 +37,26 @@ export class ProviderSendManifest {
       throw new Error(`Provider ${provider} not found on chain.`);
     }
 
-    const uri = `${proxy}${submitManifestPath(dseq)}`;
-    return providerGatewayPost(
-      uri,
-      providerUri,
-      owner,
-      'SEND_MANIFEST',
-      { manifest: manifest }
-    ).then(response => response.text());
+    const uri = `${providerUri}${submitManifestPath(dseq.toNumber())}`;
+
+    const pem = await getPemStrings(owner);
+
+    const httpsAgent = new https.Agent({
+      cert: pem.cert,
+      key: pem.key,
+      rejectUnauthorized: false
+    });
+
+    const res = await axios.put(uri, manifest, { httpsAgent });
+
+    return res.data;
+
+    // return providerGatewayPost(
+    //   uri,
+    //   providerUri,
+    //   owner,
+    //   'SEND_MANIFEST',
+    //   { manifest: manifest }
+    // ).then(response => response.text());
   }
 }

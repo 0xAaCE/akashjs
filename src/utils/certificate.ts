@@ -2,7 +2,9 @@ import { Certificate, AttributeTypeAndValue, BasicConstraints, Extension, ExtKey
 import * as asn1js from "asn1js";
 import { arrayBufferToString, toBase64, stringToArrayBuffer } from "pvutils";
 import { del, get, set } from 'idb-keyval';
+import { writeFileSync, readFileSync } from 'fs';
 
+const CERT_PATH = './'
 export interface PEMBlocks {
   owner: string,
   serialNumber: number,
@@ -42,6 +44,7 @@ export async function createPEMBlocks(
   // against the one on chain. This feels attackable.
   //
   // Need to think about this more...
+  
   const keyPair = await crypto.generateKey(algo.algorithm as Algorithm, true, algo.usages) as CryptoKeyPair;
 
   const certificate = new Certificate();
@@ -184,9 +187,29 @@ export function encode(pemBlocks: PEMBlocks) {
   }
 }
 
+export const  toFile = async (pemBlocks: PEMBlocks) => {
+  const { certificate, privateKey, publicKey } = encode(pemBlocks);
+
+  const content = `${certificate}\n${privateKey}\n${publicKey}`;
+
+  await writeFileSync(`${CERT_PATH}${pemBlocks.owner}`, content);
+
+  return true;
+};
+
+export const fromFile = async (owner: string) => {
+  const content = await readFileSync(`${CERT_PATH}${owner}`, 'utf8');
+  const certificate = content.split('-----END CERTIFICATE-----\n')[0].replace('-----END CERTIFICATE-----\n', '-----END CERTIFICATE-----');
+  const privateKey = content.split('-----END PRIVATE KEY-----\n')[0].replace('-----END PRIVATE KEY-----\n', '-----END PRIVATE KEY-----');
+  const publicKey = content.split('-----END EC PUBLIC KEY-----\n')[0]
+
+  return {certificate, privateKey, publicKey};
+}
+
+
+
 export async function getPemStrings(owner: string) {
-  const pemBlocks = await loadPEMBlocks(owner);
-  const pemStrings = encode(pemBlocks);
+  const pemStrings = await fromFile(owner);
   return {
     cert: pemStrings.certificate,
     key: pemStrings.privateKey

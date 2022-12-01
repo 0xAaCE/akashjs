@@ -227,7 +227,7 @@ export class SDL {
             count: this.data.deployment[serviceName][groupName].count,
             price: {
               denom: this.data.profiles.placement[groupName].pricing[profileName].denom,
-              amount: this.data.profiles.placement[groupName].pricing[profileName].amount.toString().padEnd(23, '0')
+              amount: this.data.profiles.placement[groupName].pricing[profileName].amount.toString().padEnd(22, '0')
             },
             resources: {
               cpu: {

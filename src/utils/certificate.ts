@@ -21,7 +21,7 @@ export async function createPEMBlocks(
   signAlgorithm = "ECDSA",
   hashAlgorithm = "SHA-256"
 ): Promise<PEMBlocks> {
-  const crypto = getCrypto() as SubtleCrypto;
+  const crypto = getCrypto(true);
   const algo = getAlgorithmParameters(signAlgorithm, "generateKey");
 
   // Note that golang version further password protects the private key
@@ -192,16 +192,16 @@ export const  toFile = async (pemBlocks: PEMBlocks) => {
 
   const content = `${certificate}\n${privateKey}\n${publicKey}`;
 
-  await writeFileSync(`${CERT_PATH}${pemBlocks.owner}`, content);
+  await writeFileSync(`${CERT_PATH}${pemBlocks.owner}.pem`, content);
 
   return true;
 };
 
 export const fromFile = async (owner: string) => {
-  const content = await readFileSync(`${CERT_PATH}${owner}`, 'utf8');
-  const certificate = content.split('-----END CERTIFICATE-----\n')[0].replace('-----END CERTIFICATE-----\n', '-----END CERTIFICATE-----');
-  const privateKey = content.split('-----END PRIVATE KEY-----\n')[0].replace('-----END PRIVATE KEY-----\n', '-----END PRIVATE KEY-----');
-  const publicKey = content.split('-----END EC PUBLIC KEY-----\n')[0]
+  const content = await readFileSync(`${CERT_PATH}${owner}.pem`, 'utf8');
+  const certificate = content.split('-----END CERTIFICATE-----\n')[0].concat('-----END CERTIFICATE-----');
+  const privateKey = content.split('-----END CERTIFICATE-----\n')[1].split('-----END PRIVATE KEY-----\n')[0].concat('-----END PRIVATE KEY-----');
+  const publicKey = content.split('-----END CERTIFICATE-----\n')[1].split('-----END PRIVATE KEY-----\n')[1].split('-----END EC PUBLIC KEY-----').concat('-----END EC PUBLIC KEY-----')
 
   return {certificate, privateKey, publicKey};
 }

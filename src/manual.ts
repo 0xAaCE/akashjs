@@ -1,5 +1,4 @@
 import fs from 'fs';
-import crypto from 'crypto';
 import dotenv from 'dotenv';
 import { ICryptoEngine, setEngine } from 'pkijs';
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
@@ -8,6 +7,7 @@ import { Akash, SDL, findDeploymentSequence } from './index';
 import { QueryBidsResponse } from './codec/akash/market/v1beta2/query';
 import { Bid, BidID } from './codec/akash/market/v1beta2/bid';
 import { MsgCreateDeploymentEncodeObject } from './akash/encodeobjects';
+import cryptoEngine from './utils/crypto-engine';
 import Long from 'long';
 
 dotenv.config();
@@ -115,7 +115,7 @@ const createLease = async (bid: Bid) => {
     return response;
 }
 
-const sendManifest = async (sdl: SDL, bidId: BidID) => {
+const sendManifest = async (sdl: SDL, bidId: BidID | undefined) => {
     const { wallet } = await getWallet();
     const akash = await Akash.connect(RPC, wallet);
     if (!bidId) throw new Error('Bid ID not found'); 
@@ -170,37 +170,43 @@ const clearOpenDeployments = async () => {
 
 const main = async () => {
     // console.log('crypto', crypto);
-    setEngine("newEngine", crypto.webcrypto.subtle as unknown as ICryptoEngine);
+
+    setEngine("newEngine", cryptoEngine);
+
 
     await createCertificate();
 
-    // const { deployment, sdl } = await getDeploymentParams();
+    const { deployment, sdl } = await getDeploymentParams();
 
-    // const { ...bidParams } = await makeDeployment(deployment, sdl);
+    const { ...bidParams } = await makeDeployment(deployment, sdl);
 
-    // console.log('Bid params', bidParams);
+    console.log('Bid params', bidParams);
     
-    // const bids = await new Promise(resolve => {
-    //     setTimeout(async () => {
-    //         const bids = await getBids(bidParams);
-    //         resolve(bids);
-    //     }, 10000);
-    // }) as QueryBidsResponse;
+    const bids = await new Promise(resolve => {
+        setTimeout(async () => {
+            const bids = await getBids(bidParams);
+            resolve(bids);
+        }, 10000);
+    }) as QueryBidsResponse;
     
-    // const bid = await selectBid(bids);
-    // if (!bid.bid) throw new Error('Bid not found');
+    const bid = await selectBid(bids);
+    if (!bid.bid) throw new Error('Bid not found');
 
-    // const lease = await createLease(bid.bid);
+    const lease = await createLease(bid.bid);
+
+    const bidId = bid.bid.bidId;
 
     // const bidId = {
     //     owner: "akash1hhv46uel0a3w63pj2afveaqqhk2sujcelct69t",
-    //     dseq: new Long(8703712),
+    //     dseq: new Long(8708541),
     //     gseq: 1,
     //     oseq: 1,
-    //     provider: "akash1qhjtxmacslmefm3v4sn5ggq6ed9jn83cy2rjd0",
+    //     provider: "akash1q7spv2cw06yszgfp4f9ed59lkka6ytn8g4tkjf",
     // }
 
-    // const manifest = await sendManifest(sdl, bidId);
+    console.log('Sending manifest', JSON.stringify(sdl));
+
+    const manifest = await sendManifest(sdl, bidId);
 
     
     // const deployments = await listDeployments();
